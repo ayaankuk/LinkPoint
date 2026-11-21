@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tariff Trace AI broker portal</title>
+<style>
+:root{--bg:#F7F9FB;--card:#fff;--ink:#141821;--mute:#5d6472;--line:#e2e4e9;--acc:#004B73;--acc2:#CCE5FF;--ok:#0b6b4f;--ok2:#e7f3ee;--warn:#9a5b00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding:16px max(4vw,16px);background:#fff;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:22px}header h1 span{color:var(--acc)}
+.nav{font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;padding:6px 10px;border-radius:8px}.nav.on{background:var(--acc2);color:var(--acc)}
+main{max-width:1100px;margin:0 auto;padding:20px max(4vw,16px)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}.kpi b{display:block;font-size:26px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+h2{margin:0 0 8px;font-size:18px}h3{margin:0;font-size:16px}
+.mute{color:var(--mute);font-size:14px}
+.amt{font-weight:700;font-size:18px;white-space:nowrap}
+.status{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--acc2);color:var(--acc)}
+.status.Filed{background:#fff4e0;color:var(--warn)}.status.Refund{background:var(--ok2);color:var(--ok)}
+button{font:600 15px system-ui;border-radius:10px;border:1px solid var(--acc);background:var(--acc);color:#fff;padding:10px 16px;cursor:pointer;min-height:44px}
+button:disabled{opacity:.5}
+ul{margin:6px 0;padding-left:20px;font-size:14px}
+.empty{color:var(--mute);text-align:center;padding:30px}
+@media(max-width:700px){.kpis{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Tariff Trace <span>AI</span> · Broker portal</h1>
+  <div><a class="nav" href="/">Website</a><a class="nav" href="/app">Client</a><a class="nav on" href="/broker.html">Broker portal</a><a class="nav" href="/admin.html">Admin</a></div>
+</header>
+<main>
+  <p class="mute">Prepared claims from Tariff Trace AI clients. Review the package and file it under the client's authorization. Each filed package adds a $250 prepared-claim fee to your Tariff Trace AI statement; you bill the client your normal filing fee.</p>
+  <div class="kpis">
+    <div class="kpi"><span class="mute">Waiting for your review</span><b id="k-wait">0</b></div>
+    <div class="kpi"><span class="mute">Filed, awaiting refund</span><b id="k-filed">0</b></div>
+    <div class="kpi"><span class="mute">Refunds received for clients</span><b id="k-paid">$0</b></div>
+  </div>
+  <div id="list"><div class="card empty">Loading claims…</div></div>
+</main>
+<script>
+{
+const $ = (s) => document.querySelector(s);
+const cad = (n) => (n || 0).toLocaleString('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+async function load() {
+  const { claims = [] } = await (await fetch('/api/broker/claims')).json();
+  $('#k-wait').textContent = claims.filter((c) => c.status === 'Broker reviewing').length;
+  $('#k-filed').textContent = claims.filter((c) => c.status === 'Filed').length;
+  $('#k-paid').textContent = cad(claims.filter((c) => c.status === 'Refund received').reduce((s, c) => s + c.amount, 0));
+  if (!claims.length) { $('#list').innerHTML = '<div class="card empty">No claims yet. Send one from the client app ("Send to licensed broker").</div>'; return; }
+  $('#list').innerHTML = claims.map((c) => `
+    <div class="card">
+      <div class="top"><div><h3>${esc(c.finding.title)}</h3><p class="mute" style="margin:2px 0">${esc(c.client)} · claim ${esc(c.id)}</p></div>
+        <div style="text-align:right"><div class="amt">${cad(c.amount)}</div><span class="status ${esc(c.status.split(' ')[0])}">${esc(c.status)}</span></div></div>
+      <p style="margin:8px 0">${esc(c.draft.claimSummary || c.finding.why)}</p>
+      ${(c.draft.brokerChecklist || c.finding.docs || []).length ? `<b style="font-size:14px">Checklist before filing</b><ul>${(c.draft.brokerChecklist || c.finding.docs).map((d) => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
+      ${c.status === 'Broker reviewing' ? `<button type="button" data-file="${esc(c.id)}">Approve and file</button>` : ''}
+    </div>`).join('');
+}
+
+$('#list').addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-file]'); if (!b) return;
+  b.disabled = true; b.textContent = 'Filing…';
+  const r = await fetch(`/api/broker/claims/${encodeURIComponent(b.dataset.file)}/file`, { method: 'POST' });
+  if (!r.ok) { b.textContent = 'Could not file'; return; }
+  load();
+});
+
+load(); setInterval(load, 4000);
+}
+</script>
+</body>
+</html>

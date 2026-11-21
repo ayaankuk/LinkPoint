@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="en"><head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%230369A1%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22700%22%3ET%3C/text%3E%3C/svg%3E">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For licensed customs brokers | Tariff Trace AI</title>
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body class="bg-surface text-on-surface font-body min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+  <!-- Shared Navigation -->
+  <header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-gutter-lg h-16 flex items-center justify-between gap-gutter-md">
+      <a href="/" class="flex items-center gap-2.5 text-on-surface">
+        <span class="w-8 h-8 rounded-md bg-broker-accent text-on-broker-accent flex items-center justify-center">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">receipt_long</span>
+        </span>
+        <span class="font-headline text-title-lg font-bold tracking-tight" data-design-text-token="title-lg">Tariff Trace <span class="text-broker-accent">AI</span></span>
+      </a>
+      <nav aria-label="Primary navigation" class="hidden md:flex items-center gap-gutter-lg">
+        <a href="/how-it-works" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">How it works</a>
+        <a href="/brokers" class="font-label text-label-lg text-broker-accent">For brokers</a>
+        <a href="/pricing" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Pricing</a>
+        <a href="/about" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">About</a>
+      </nav>
+      <div class="flex items-center gap-gutter-sm">
+        <a href="/start" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" class="inline-flex items-center justify-center min-h-[44px] px-5 py-2 rounded-md bg-primary text-on-primary font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+          <span data-design-text-token="label-lg">Get a free scan</span>
+        </a>
+      </div>
+    </div>
+  <nav aria-label="Mobile navigation" class="md:hidden border-t border-outline-variant overflow-x-auto"><div class="px-gutter-lg flex gap-gutter-md py-2 font-label text-label-sm text-on-surface-variant whitespace-nowrap"><a href="/how-it-works">How it works</a><a href="/brokers">For brokers</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/app">Client app</a></div></nav>
+  </header>
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="py-section">
+      <div class="max-w-7xl mx-auto px-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-xl items-center">
+        <div class="lg:col-span-6 flex flex-col gap-gutter-lg">
+          <span class="self-start px-3 py-1 rounded-full bg-broker-container text-on-broker-container font-label text-label-sm">For licensed Canadian customs brokers</span>
+          <h1 class="font-headline text-display-lg text-on-surface text-balance" data-design-text-token="display-lg">
+            Ready-to-file tariff claims, delivered to your queue.
+          </h1>
+          <p class="font-body text-body-lg text-on-surface-variant max-w-prose" data-design-text-token="body-lg">
+            Stop spending hours chasing missing origin paperwork from importers. Every claim in your Tariff Trace AI queue arrives pre-checked with evidence attached.
+          </p>
+          <div class="flex flex-wrap items-center gap-gutter-md">
+            <a href="/broker" data-component-id="button-broker" data-component-type="button" data-component-variant="broker" class="inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-md bg-broker-accent text-on-broker-accent font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+              <span data-design-text-token="label-lg">Become a partner broker</span>
+            </a>
+            <a href="/broker" class="font-label text-label-lg text-broker-accent hover:underline">Open the live broker portal →</a>
+          </div>
+        </div>
+
+        <!-- Interactive Broker Queue Card -->
+        <div class="lg:col-span-6">
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+            <div class="flex items-center justify-between border-b border-outline-variant pb-gutter-sm">
+              <div>
+                <p class="font-label text-label-sm text-broker-accent">Broker portal queue</p>
+                <h2 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Prepared claims awaiting sign-off</h2>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="broker-fee-booked" class="px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm tabular-nums">$0 booked</span>
+                <span id="broker-ready-count" class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label text-label-sm">2 ready</span>
+              </div>
+            </div>
+
+            <div id="claim-card-1" class="border border-outline-variant rounded-md p-gutter-md flex flex-col gap-3">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p class="font-title text-title-md text-on-surface">Lakeshore Windows Inc.</p>
+                  <p class="font-mono text-mono-sm text-on-surface-variant">HS 7008.00 • Wrong-origin refund (CN)</p>
+                </div>
+                <span class="font-headline text-headline-md text-broker-accent tabular-nums">$4,500.00</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Invoice parsed</span>
+                <span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Supplier origin screenshot</span>
+                <span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label text-label-sm">AI audit log</span>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-outline-variant">
+                <span class="font-body text-body-sm text-on-surface-variant">Prepared fee: $250</span>
+                <button type="button" data-claim-btn="1" class="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-md bg-broker-accent text-on-broker-accent font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change cursor-pointer">
+                  <span>Approve and file</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="claim-card-2" class="border border-outline-variant rounded-md p-gutter-md flex items-center justify-between gap-2 bg-surface-container-low">
+              <div>
+                <p class="font-title text-title-md text-on-surface">Lakeshore Windows Inc.</p>
+                <p class="font-mono text-mono-sm text-on-surface-variant">HS 7604.29 → 7610.10 • Code correction</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="font-title text-title-lg text-on-surface tabular-nums">$8,000.00</span>
+                <button type="button" data-claim-btn="2" class="inline-flex items-center justify-center min-h-10 px-3 py-1.5 rounded-md bg-broker-accent text-on-broker-accent font-label text-label-sm hover:opacity-95 cursor-pointer">
+                  <span>Approve and file</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <script>
+      (function () {
+        let readyCount = 2;
+        let booked = 0;
+        const readyEl = document.getElementById('broker-ready-count');
+        const bookedEl = document.getElementById('broker-fee-booked');
+        document.querySelectorAll('[data-claim-btn]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            if (btn.dataset.filed === '1') return;
+            btn.dataset.filed = '1';
+            btn.textContent = 'Filed';
+            btn.className = 'inline-flex items-center justify-center min-h-[40px] px-4 py-2 rounded-md bg-primary-container text-on-primary-container font-label text-label-sm';
+            readyCount = Math.max(0, readyCount - 1);
+            booked += 250;
+            readyEl.textContent = readyCount + ' ready';
+            bookedEl.textContent = '$' + booked.toLocaleString('en-CA') + ' booked';
+          });
+        });
+      })();
+    </script>
+
+    <!-- Benefits -->
+    <section class="py-section bg-surface-container-low border-y border-outline-variant">
+      <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col gap-gutter-xl">
+        <h2 class="font-headline text-headline-lg text-on-surface" data-design-text-token="headline-lg">Why partner with Tariff Trace AI</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg items-stretch">
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-broker-accent text-[24px]" aria-hidden="true">folder_check</span>
+            <h3 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Pre-checked packages with evidence attached</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Every claim includes parsed line items, HS justification, supplier origin screenshots, and the full AI decision log.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-broker-accent text-[24px]" aria-hidden="true">storefront</span>
+            <h3 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">New importer clients, already qualified</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Importers come to us to find the money. Claims worth filing are routed to partner brokers, with the work already done.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-broker-accent text-[24px]" aria-hidden="true">payments</span>
+            <h3 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">You keep your filing fee</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Your firm bills its standard filing fee directly. We never take a cut of your licensed brokerage revenue.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Broker Pricing -->
+    <section class="py-section">
+      <div class="max-w-5xl mx-auto px-gutter-lg flex flex-col gap-gutter-xl">
+        <div class="text-center flex flex-col gap-2">
+          <h2 class="font-headline text-headline-lg text-on-surface" data-design-text-token="headline-lg">Simple broker partner pricing</h2>
+          <p class="font-body text-body-lg text-on-surface-variant" data-design-text-token="body-lg">Pay only for ready-to-file claim packages and portal access.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter-lg items-stretch">
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col justify-between gap-gutter-md">
+            <div class="flex flex-col gap-2">
+              <span class="font-label text-label-sm text-broker-accent">Per prepared claim</span>
+              <p class="font-headline text-display-lg text-on-surface tabular-nums">$250</p>
+              <p class="font-body text-body-md text-on-surface-variant">Booked when you approve and file a pre-checked claim package from your queue.</p>
+            </div>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col justify-between gap-gutter-md">
+            <div class="flex flex-col gap-2">
+              <span class="font-label text-label-sm text-broker-accent">Platform licence</span>
+              <p class="font-headline text-display-lg text-on-surface tabular-nums">$1,000<span class="text-title-lg text-on-surface-variant font-normal">/mo</span></p>
+              <p class="font-body text-body-md text-on-surface-variant">Full access to the broker portal, AI audit trail, Origin Detective evidence, and priority Ontario claim routing.</p>
+            </div>
+          </article>
+        </div>
+        <div class="text-center">
+          <a href="/broker" class="inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-md bg-broker-accent text-on-broker-accent font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+            <span data-design-text-token="label-lg">Become a partner broker</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="bg-surface-container-low border-t border-outline-variant py-gutter-xl">
+    <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-gutter-md">
+      <div class="flex flex-col gap-1">
+        <span class="font-headline text-title-md text-on-surface font-bold" data-design-text-token="title-md">Tariff Trace AI</span>
+        <p class="font-body text-body-sm text-on-surface-variant" data-design-text-token="body-sm">Tariff Trace AI is not a customs broker; claims are filed by licensed brokers.</p>
+      </div>
+      <nav aria-label="Footer navigation" class="flex flex-wrap gap-gutter-md font-body text-body-sm text-on-surface-variant">
+        <a href="/" class="hover:text-on-surface">Home</a>
+        <a href="/how-it-works" class="hover:text-on-surface">How it works</a>
+        <a href="/brokers" class="hover:text-on-surface">For brokers</a>
+        <a href="/pricing" class="hover:text-on-surface">Pricing</a>
+        <a href="/about" class="hover:text-on-surface">About</a>
+        <a href="/start" class="hover:text-on-surface">Free scan</a>
+        <a href="/app" class="hover:text-on-surface">Client app</a>
+      </nav>
+    </div>
+  </footer>
+
+
+
+</body></html>

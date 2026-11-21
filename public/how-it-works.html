@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en"><head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%230369A1%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22700%22%3ET%3C/text%3E%3C/svg%3E">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How it works | Tariff Trace AI</title>
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body class="bg-surface text-on-surface font-body min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+  <!-- Shared Navigation -->
+  <header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-gutter-lg h-16 flex items-center justify-between gap-gutter-md">
+      <a href="/" class="flex items-center gap-2.5 text-on-surface">
+        <span class="w-8 h-8 rounded-md bg-primary text-on-primary flex items-center justify-center">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">receipt_long</span>
+        </span>
+        <span class="font-headline text-title-lg font-bold tracking-tight" data-design-text-token="title-lg">Tariff Trace <span class="text-primary">AI</span></span>
+      </a>
+      <nav aria-label="Primary navigation" class="hidden md:flex items-center gap-gutter-lg">
+        <a href="/how-it-works" class="font-label text-label-lg text-primary">How it works</a>
+        <a href="/brokers" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">For brokers</a>
+        <a href="/pricing" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Pricing</a>
+        <a href="/about" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">About</a>
+      </nav>
+      <div class="flex items-center gap-gutter-sm">
+        <a href="/start" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" class="inline-flex items-center justify-center min-h-[44px] px-5 py-2 rounded-md bg-primary text-on-primary font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+          <span data-design-text-token="label-lg">Get a free scan</span>
+        </a>
+      </div>
+    </div>
+  <nav aria-label="Mobile navigation" class="md:hidden border-t border-outline-variant overflow-x-auto"><div class="px-gutter-lg flex gap-gutter-md py-2 font-label text-label-sm text-on-surface-variant whitespace-nowrap"><a href="/how-it-works">How it works</a><a href="/brokers">For brokers</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/app">Client app</a></div></nav>
+  </header>
+
+  <main class="flex-1">
+    <!-- Page Header -->
+    <section class="py-section pb-gutter-xl">
+      <div class="max-w-4xl mx-auto px-gutter-lg flex flex-col gap-gutter-md">
+        <h1 class="font-headline text-display-lg text-on-surface text-balance" data-design-text-token="display-lg">
+          From invoice upload to CBSA refund in five clear steps.
+        </h1>
+        <p class="font-body text-body-lg text-on-surface-variant max-w-prose" data-design-text-token="body-lg">
+          Tariff Trace AI handles the document reading, tariff matching, and origin evidence gathering. A licensed Canadian customs broker reviews and files every claim.
+        </p>
+      </div>
+    </section>
+
+    <!-- Interactive Demo Walkthrough Bar -->
+    <section class="pb-gutter-lg">
+      <div class="max-w-4xl mx-auto px-gutter-lg">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-md flex flex-col gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="Pipeline demo steps">
+              <button type="button" data-step-btn="1" class="px-3 py-1.5 rounded-md bg-primary text-on-primary font-label text-label-sm cursor-pointer">1. Upload</button>
+              <button type="button" data-step-btn="2" class="px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer">2. AI Scan</button>
+              <button type="button" data-step-btn="3" class="px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer">3. Origin</button>
+              <button type="button" data-step-btn="4" class="px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer">4. Broker</button>
+              <button type="button" data-step-btn="5" class="px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer">5. Payout</button>
+            </div>
+            <button type="button" id="next-step-demo" class="px-3 py-1.5 rounded-md bg-surface-container-lowest text-primary border border-primary font-label text-label-sm cursor-pointer">Next demo step →</button>
+          </div>
+          <div id="step-demo-console" class="bg-primary-container rounded-md p-3 font-mono text-mono-sm text-on-primary-container">
+            Step 1 active: Parsed lakeshore_invoices_oct.pdf (5 line items stored privately in R2).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5-Step Timeline -->
+    <section class="pb-section">
+      <div class="max-w-4xl mx-auto px-gutter-lg flex flex-col gap-gutter-lg">
+        <!-- Step 1 -->
+        <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg grid grid-cols-1 md:grid-cols-12 gap-gutter-lg items-center">
+          <div class="md:col-span-7 flex items-start gap-gutter-md">
+            <span class="w-11 h-11 shrink-0 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">upload_file</span>
+            </span>
+            <div class="flex flex-col gap-1">
+              <h2 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Upload invoices or entries</h2>
+              <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Drop in PDFs, CSVs, or B3/CARM customs entries from your U.S. suppliers. No manual spreadsheet re-entry required.</p>
+            </div>
+          </div>
+          <div class="md:col-span-5 bg-surface-container-low border border-outline-variant rounded-md p-3 flex items-center justify-between gap-2">
+            <span class="font-mono text-mono-sm text-on-surface">lakeshore_invoices_oct.pdf</span>
+            <span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Encrypted</span>
+          </div>
+        </article>
+
+        <!-- Step 2 -->
+        <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg grid grid-cols-1 md:grid-cols-12 gap-gutter-lg items-center">
+          <div class="md:col-span-7 flex items-start gap-gutter-md">
+            <span class="w-11 h-11 shrink-0 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">fact_check</span>
+            </span>
+            <div class="flex flex-col gap-1">
+              <h2 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">AI reads every line and checks origin, code and export</h2>
+              <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Each SKU is matched against Canada&#39;s counter-tariff schedule to flag non-U.S. origin, wrong HS codes, and export drawback.</p>
+            </div>
+          </div>
+          <div class="md:col-span-5 bg-surface-container-low border border-outline-variant rounded-md p-3 flex flex-col gap-1">
+            <span class="font-mono text-mono-sm text-on-surface">HS 7008.00 • Surtax paid: $4,500</span>
+            <span class="font-label text-label-sm text-primary">Eligible: Non-U.S. origin</span>
+          </div>
+        </article>
+
+        <!-- Step 3 -->
+        <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg grid grid-cols-1 md:grid-cols-12 gap-gutter-lg items-center">
+          <div class="md:col-span-7 flex items-start gap-gutter-md">
+            <span class="w-11 h-11 shrink-0 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">travel_explore</span>
+            </span>
+            <div class="flex flex-col gap-1">
+              <h2 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Origin evidence gathered from supplier pages</h2>
+              <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">When an invoice omits country of origin, our Origin Detective visits the supplier&#39;s product page and captures proof.</p>
+            </div>
+          </div>
+          <div class="md:col-span-5 bg-warning-container border border-outline-variant rounded-md p-3 flex flex-col gap-1">
+            <span class="font-mono text-mono-sm text-on-warning-container">Country of origin: Taiwan</span>
+            <span class="font-label text-label-sm text-warning">Screenshot attached ($1,500 unlocked)</span>
+          </div>
+        </article>
+
+        <!-- Step 4 -->
+        <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg grid grid-cols-1 md:grid-cols-12 gap-gutter-lg items-center">
+          <div class="md:col-span-7 flex items-start gap-gutter-md">
+            <span class="w-11 h-11 shrink-0 rounded-md bg-broker-container text-broker-accent flex items-center justify-center">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">gavel</span>
+            </span>
+            <div class="flex flex-col gap-1">
+              <h2 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Claim package prepared and sent to a licensed broker</h2>
+              <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">We bundle the invoice lines, HS rationale, and origin screenshots into a clean adjustment package for broker sign-off.</p>
+            </div>
+          </div>
+          <div class="md:col-span-5 bg-broker-container border border-outline-variant rounded-md p-3 flex items-center justify-between gap-2">
+            <span class="font-label text-label-sm text-on-broker-container">Broker queue: Ready</span>
+            <span class="px-2.5 py-1 rounded-md bg-broker-accent text-on-broker-accent font-label text-label-sm">Approve &amp; file</span>
+          </div>
+        </article>
+
+        <!-- Step 5 -->
+        <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg grid grid-cols-1 md:grid-cols-12 gap-gutter-lg items-center">
+          <div class="md:col-span-7 flex items-start gap-gutter-md">
+            <span class="w-11 h-11 shrink-0 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[22px]" aria-hidden="true">notifications_active</span>
+            </span>
+            <div class="flex flex-col gap-1">
+              <h2 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Refund tracked until it lands, then monitoring alerts when tariffs change</h2>
+              <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Follow every stage from filed to paid, and get automatic re-checks whenever Ottawa updates the counter-tariff list.</p>
+            </div>
+          </div>
+          <div class="md:col-span-5 bg-primary-container border border-outline-variant rounded-md p-3 flex items-center justify-between gap-2">
+            <span class="font-label text-label-sm text-on-primary-container">Tariff list updated</span>
+            <span class="font-mono text-mono-sm text-primary">+$310 new savings</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- What you need + Timeline Graphic -->
+    <section class="py-section bg-surface-container-low border-t border-outline-variant">
+      <div class="max-w-7xl mx-auto px-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-xl">
+        <div class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+          <h2 class="font-headline text-headline-md text-on-surface" data-design-text-token="headline-md">What you need to start</h2>
+          <ul class="flex flex-col gap-gutter-sm font-body text-body-md text-on-surface">
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5" aria-hidden="true">check_circle</span>
+              <span>Recent commercial invoices or CBSA customs entries (PDF, CSV, or pasted table)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5" aria-hidden="true">check_circle</span>
+              <span>Your business name as the importer of record</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5" aria-hidden="true">check_circle</span>
+              <span>Optional supplier product links if country of origin is missing from the invoice</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col justify-between gap-gutter-md">
+          <h2 class="font-headline text-headline-md text-on-surface" data-design-text-token="headline-md">Typical timeline</h2>
+          <div class="grid grid-cols-3 gap-gutter-md">
+            <div class="bg-surface-container-low rounded-md p-gutter-md flex flex-col gap-1">
+              <span class="font-label text-label-sm text-primary">Step 1</span>
+              <span class="font-title text-title-lg text-on-surface">Minutes</span>
+              <span class="font-body text-body-sm text-on-surface-variant">Free invoice scan</span>
+            </div>
+            <div class="bg-surface-container-low rounded-md p-gutter-md flex flex-col gap-1">
+              <span class="font-label text-label-sm text-broker-accent">Step 2</span>
+              <span class="font-title text-title-lg text-on-surface">~1 week</span>
+              <span class="font-body text-body-sm text-on-surface-variant">Licensed broker filing</span>
+            </div>
+            <div class="bg-surface-container-low rounded-md p-gutter-md flex flex-col gap-1">
+              <span class="font-label text-label-sm text-primary">Step 3</span>
+              <span class="font-title text-title-lg text-on-surface">~3 months</span>
+              <span class="font-body text-body-sm text-on-surface-variant">CBSA refund payout</span>
+            </div>
+          </div>
+          <a href="/start" class="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-md bg-primary text-on-primary font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+            <span data-design-text-token="label-lg">Get a free scan</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="bg-surface-container-low border-t border-outline-variant py-gutter-xl">
+    <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-gutter-md">
+      <div class="flex flex-col gap-1">
+        <span class="font-headline text-title-md text-on-surface font-bold" data-design-text-token="title-md">Tariff Trace AI</span>
+        <p class="font-body text-body-sm text-on-surface-variant" data-design-text-token="body-sm">Tariff Trace AI is not a customs broker; claims are filed by licensed brokers.</p>
+      </div>
+      <nav aria-label="Footer navigation" class="flex flex-wrap gap-gutter-md font-body text-body-sm text-on-surface-variant">
+        <a href="/" class="hover:text-on-surface">Home</a>
+        <a href="/how-it-works" class="hover:text-on-surface">How it works</a>
+        <a href="/brokers" class="hover:text-on-surface">For brokers</a>
+        <a href="/pricing" class="hover:text-on-surface">Pricing</a>
+        <a href="/about" class="hover:text-on-surface">About</a>
+        <a href="/start" class="hover:text-on-surface">Free scan</a>
+        <a href="/app" class="hover:text-on-surface">Client app</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const messages = {
+        1: 'Step 1 active: Parsed lakeshore_invoices_oct.pdf (5 line items stored privately in R2).',
+        2: 'Step 2 active: Insulated glass units made in China • $4,500 surtax refundable; window frames under the wrong code • $8,000 back.',
+        3: 'Step 3 active: Origin Detective captured "Country of origin: Taiwan" (+$1,500 unlocked).',
+        4: 'Step 4 active: Bundled the claim package and routed to licensed broker queue.',
+        5: 'Step 5 active: Claim filed with CBSA • Monitoring active (+$310 new tariff-list savings).'
+      };
+      let current = 1;
+      const consoleEl = document.getElementById('step-demo-console');
+      const btns = document.querySelectorAll('[data-step-btn]');
+      const nextBtn = document.getElementById('next-step-demo');
+
+      function setStep(n) {
+        current = n;
+        if (consoleEl) consoleEl.textContent = messages[n];
+        btns.forEach((b) => {
+          const isCurrent = Number(b.dataset.stepBtn) === n;
+          b.className = isCurrent
+            ? 'px-3 py-1.5 rounded-md bg-primary text-on-primary font-label text-label-sm cursor-pointer'
+            : 'px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer';
+        });
+      }
+
+      btns.forEach((b) => b.addEventListener('click', () => setStep(Number(b.dataset.stepBtn))));
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => setStep(current >= 5 ? 1 : current + 1));
+      }
+    })();
+  </script>
+
+
+
+</body></html>

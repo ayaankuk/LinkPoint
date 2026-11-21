@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tariff Trace AI admin</title>
+<style>
+:root{--bg:#F7F9FB;--card:#fff;--ink:#16181d;--mute:#5d6472;--line:#DBE3EE;--acc:#0369A1;--acc2:#E0F2FE;--blue:#004B73}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding:16px max(4vw,16px);background:#fff;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:22px}header h1 span{color:var(--acc)}
+.nav{font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;padding:6px 10px;border-radius:8px}.nav.on{background:var(--acc2);color:var(--acc)}
+main{max-width:1200px;margin:0 auto;padding:20px max(4vw,16px)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+h2{margin:0 0 10px;font-size:18px}
+.mute{color:var(--mute);font-size:14px}
+.bar{display:grid;grid-template-columns:170px minmax(0,1fr) 90px;gap:10px;align-items:center;font-size:14px;margin:8px 0}
+.track{height:14px;background:#eeece6;border-radius:7px;overflow:hidden}.fill{height:100%;border-radius:7px;background:var(--acc)}.fill.broker{background:var(--blue)}
+.bar span:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--mute)}td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+button{font:600 15px system-ui;border-radius:10px;border:1px solid var(--acc);background:var(--acc);color:#fff;padding:10px 16px;cursor:pointer;min-height:44px}
+.legend{display:flex;gap:14px;font-size:13px;color:var(--mute);margin-bottom:6px}.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:minmax(0,1fr)}.bar{grid-template-columns:120px minmax(0,1fr) 80px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Tariff Trace <span>AI</span> · Admin</h1>
+  <div><a class="nav" href="/">Website</a><a class="nav" href="/app">Client</a><a class="nav" href="/broker.html">Broker portal</a><a class="nav on" href="/admin.html">Admin</a></div>
+</header>
+<main>
+  <div class="kpis">
+    <div class="kpi"><span class="mute">Clients</span><b id="k-clients">0</b></div>
+    <div class="kpi"><span class="mute">Revenue recorded</span><b id="k-rev">$0</b></div>
+    <div class="kpi"><span class="mute">Success fees in the pipeline</span><b id="k-pipe">$0</b></div>
+    <div class="kpi"><span class="mute">Refunds found for clients</span><b id="k-found">$0</b></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><h2>Revenue by stream</h2><button type="button" id="bill">Run monthly billing</button></div>
+      <div class="legend"><span><i class="dot" style="background:var(--acc)"></i>Paid by clients</span><span><i class="dot" style="background:var(--blue)"></i>Paid by brokers</span></div>
+      <div id="streams"><p class="mute">No revenue yet. Run a scan in the client app.</p></div>
+      <p class="mute" id="billnote" style="margin:8px 0 0">Monthly billing adds each client's $299 monitoring fee, 20% of the surtax they avoid, and broker platform licences.</p>
+    </div>
+    <div class="card">
+      <h2>Claims pipeline</h2>
+      <table><thead><tr><th>Status</th><th class="n">Claims</th><th class="n">Refund value</th></tr></thead><tbody id="pipe"></tbody></table>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Recent ledger entries</h2>
+    <div style="overflow-x:auto"><table><thead><tr><th>When</th><th>Client or broker</th><th>Paid by</th><th>Stream</th><th class="n">Amount</th></tr></thead><tbody id="ledger"></tbody></table></div>
+  </div>
+</main>
+<script>
+{
+const $ = (s) => document.querySelector(s);
+const cad = (n) => (n || 0).toLocaleString('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const NAMES = { setup: 'Setup fees', relief_prep: 'Relief application prep', prepared_claim: 'Prepared-claim fees', platform_licence: 'Broker platform licences', monitoring: 'Monitoring subscriptions', savings_fee: 'Savings fees (20% avoided)', refund_success: 'Refund success fees (20%)' };
+const ORDER = ['setup', 'relief_prep', 'monitoring', 'savings_fee', 'refund_success', 'prepared_claim', 'platform_licence'];
+
+async function load() {
+  const r = await fetch('/api/admin/summary'); const d = await r.json();
+  if (!r.ok) { $('#streams').innerHTML = `<p class="mute">${esc(d.error)}</p>`; return; }
+  const streams = [...d.streams].sort((a, b) => ORDER.indexOf(a.stream) - ORDER.indexOf(b.stream));
+  const total = streams.reduce((s, x) => s + x.total, 0), max = Math.max(1, ...streams.map((x) => x.total));
+  $('#k-clients').textContent = d.clients.n || 0;
+  $('#k-rev').textContent = cad(total);
+  $('#k-pipe').textContent = cad(d.pendingSuccessFees);
+  $('#k-found').textContent = cad(d.clients.recoverable);
+  if (streams.length) $('#streams').innerHTML = streams.map((x) => `<div class="bar"><span>${esc(NAMES[x.stream] || x.stream)}</span><div class="track"><div class="fill ${x.payer === 'broker' ? 'broker' : ''}" style="width:${(x.total / max * 100).toFixed(1)}%"></div></div><span>${cad(x.total)}</span></div>`).join('');
+  $('#pipe').innerHTML = d.statuses.length ? d.statuses.map((s) => `<tr><td>${esc(s.status)}</td><td class="n">${s.n}</td><td class="n">${cad(s.amount)}</td></tr>`).join('') : '<tr><td colspan="3" class="mute">No claims yet</td></tr>';
+  $('#ledger').innerHTML = d.recent.map((l) => `<tr><td>${new Date(l.created_at).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' })}</td><td>${esc(l.client)}</td><td>${esc(l.payer)}</td><td>${esc(NAMES[l.stream] || l.stream)}</td><td class="n">${cad(l.amount)}</td></tr>`).join('') || '<tr><td colspan="5" class="mute">No entries yet</td></tr>';
+}
+
+$('#bill').addEventListener('click', async () => {
+  const b = $('#bill'); b.disabled = true;
+  const d = await (await fetch('/api/billing/run-monthly', { method: 'POST' })).json();
+  $('#billnote').textContent = d.error ? d.error : `Billed ${d.billedClients} clients and ${d.brokerLicences} broker licences for this month.`;
+  b.disabled = false; load();
+});
+
+load(); setInterval(load, 5000);
+}
+</script>
+</body>
+</html>

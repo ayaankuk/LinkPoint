@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="en"><head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%230369A1%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22700%22%3ET%3C/text%3E%3C/svg%3E">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tariff Trace AI | Get back counter-tariffs you didn’t owe</title>
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body class="bg-surface text-on-surface font-body min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+  <!-- Shared Navigation -->
+  <header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-gutter-lg h-16 flex items-center justify-between gap-gutter-md">
+      <a href="/" class="flex items-center gap-2.5 text-on-surface">
+        <span class="w-8 h-8 rounded-md bg-primary text-on-primary flex items-center justify-center">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">receipt_long</span>
+        </span>
+        <span class="font-headline text-title-lg tracking-tight" data-design-text-token="title-lg">Tariff Trace <span class="text-primary">AI</span></span>
+      </a>
+      <nav aria-label="Primary navigation" class="hidden md:flex items-center gap-gutter-lg">
+        <a href="/how-it-works" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">How it works</a>
+        <a href="/brokers" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">For brokers</a>
+        <a href="/pricing" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Pricing</a>
+        <a href="/about" class="font-label text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">About</a>
+      </nav>
+      <div class="flex items-center gap-gutter-sm">
+        <a href="/start" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" class="inline-flex items-center justify-center min-h-[44px] px-5 py-2 rounded-md bg-primary text-on-primary font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+          <span data-design-text-token="label-lg">Get a free scan</span>
+        </a>
+      </div>
+    </div>
+  <nav aria-label="Mobile navigation" class="md:hidden border-t border-outline-variant overflow-x-auto"><div class="px-gutter-lg flex gap-gutter-md py-2 font-label text-label-sm text-on-surface-variant whitespace-nowrap"><a href="/how-it-works">How it works</a><a href="/brokers">For brokers</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/app">Client app</a></div></nav>
+  </header>
+
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="py-section">
+      <div class="max-w-7xl mx-auto px-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-xl items-center">
+        <div class="lg:col-span-6 flex flex-col gap-gutter-lg">
+          <h1 class="font-headline text-display-lg text-on-surface text-balance" data-design-text-token="display-lg">
+            Paying tariffs on goods that weren&#39;t made in the U.S.? Get it back.
+          </h1>
+          <p class="font-body text-body-lg text-on-surface-variant max-w-prose text-pretty" data-design-text-token="body-lg">
+            We scan your invoices, find refunds and avoidable surtax, and a licensed customs broker files the claim. You only pay when you get paid.
+          </p>
+          <div class="flex flex-wrap items-center gap-gutter-md pt-1">
+            <a href="/start" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" class="inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-md bg-primary text-on-primary font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+              <span data-design-text-token="label-lg">Get a free scan</span>
+            </a>
+            <a href="/how-it-works" data-component-id="button-secondary" data-component-type="button" data-component-variant="secondary" class="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-3 rounded-md bg-surface-container-lowest text-on-surface border border-outline-variant font-label text-label-lg hover:bg-surface-container-low transition-colors duration-state-change">
+              <span data-design-text-token="label-lg">See how it works</span>
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Interactive Demo Card -->
+        <div class="lg:col-span-6">
+          <article data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-outline-variant pb-gutter-sm">
+              <div class="flex items-center gap-2">
+                <button type="button" id="demo-tab-beauty" class="px-3 py-1.5 rounded-md bg-primary text-on-primary font-label text-label-sm cursor-pointer">Lakeshore Windows</button>
+                <button type="button" id="demo-tab-mfg" class="px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer hover:bg-surface-container">Beauty distributor</button>
+              </div>
+              <span id="demo-lines-badge" class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label text-label-sm">5 lines checked</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-2">
+              <div>
+                <p id="demo-total" class="font-headline text-display-lg text-primary tabular-nums" data-design-text-token="display-lg">$19,300 found</p>
+                <p id="demo-subtitle" class="font-body text-body-sm text-on-surface-variant mt-1" data-design-text-token="body-sm">Lakeshore Windows Inc. • window manufacturer • 30% exported</p>
+              </div>
+              <span id="demo-status-pill" class="px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Ready to file</span>
+            </div>
+            <div class="grid grid-cols-3 gap-gutter-sm pt-1">
+              <div class="bg-primary-container rounded-md p-3 flex flex-col gap-1">
+                <span class="font-label text-label-sm text-on-primary-container" data-design-text-token="label-sm">Recoverable now</span>
+                <span id="demo-recoverable" class="font-headline text-headline-md text-primary tabular-nums" data-design-text-token="headline-md">$17,800</span>
+              </div>
+              <div class="bg-warning-container rounded-md p-3 flex flex-col gap-1">
+                <span class="font-label text-label-sm text-on-warning-container" data-design-text-token="label-sm">Needs a document</span>
+                <span id="demo-pending" class="font-headline text-headline-md text-warning tabular-nums" data-design-text-token="headline-md">$1,500</span>
+              </div>
+              <div class="bg-broker-container rounded-md p-3 flex flex-col gap-1">
+                <span class="font-label text-label-sm text-on-broker-container" data-design-text-token="label-sm">Avoidable next order</span>
+                <span id="demo-avoidable" class="font-headline text-headline-md text-broker-accent tabular-nums" data-design-text-token="headline-md">$7,700</span>
+              </div>
+            </div>
+            <div id="demo-line-box" class="bg-surface-container-low border border-outline-variant rounded-md p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between gap-2">
+                <span id="demo-line-title" class="font-mono text-mono-sm text-on-surface" data-design-text-token="mono-sm">HS 8302.41 • Window crank and lock kit (origin missing)</span>
+                <span id="demo-line-badge" class="px-2 py-0.5 rounded-full bg-warning-container text-on-warning-container font-label text-label-sm">+$1,500 locked</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" id="demo-origin-btn" class="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-1.5 rounded-md bg-surface-container-lowest border border-outline-variant text-on-surface font-label text-label-sm hover:border-primary cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">travel_explore</span>
+                  <span>Find origin evidence</span>
+                </button>
+                <button type="button" id="demo-broker-btn" class="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-1.5 rounded-md bg-primary text-on-primary font-label text-label-sm hover:opacity-95 cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">send</span>
+                  <span>Send to broker</span>
+                </button>
+                <a href="/app?sample=lakeshore" class="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-1.5 rounded-md text-primary font-label text-label-sm hover:underline">Try the live scan →</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="border-y border-outline-variant bg-surface-container-lowest py-gutter-xl">
+      <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col gap-gutter-lg">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
+          <div class="flex flex-col gap-1">
+            <p class="font-headline text-headline-lg text-on-surface tabular-nums">$10.3B</p>
+            <p class="font-body text-body-md text-on-surface-variant">collected by Canada in customs and import duties in 2025. A national total, not the amount overpaid.</p>
+          </div>
+          <div class="flex flex-col gap-1">
+            <p class="font-headline text-headline-lg text-on-surface">1 in 3</p>
+            <p class="font-body text-body-md text-on-surface-variant">businesses with 1–19 employees said Canadian tariffs on U.S. goods they bought hurt their business.</p>
+          </div>
+          <div class="flex flex-col gap-1">
+            <p class="font-headline text-headline-lg text-on-surface">Nearly 1 in 2</p>
+            <p class="font-body text-body-md text-on-surface-variant">businesses with 20–99 employees said the same.</p>
+          </div>
+        </div>
+        <p class="font-body text-body-sm text-on-surface-variant">Sources: <a class="underline hover:text-on-surface" href="https://www150.statcan.gc.ca/">Statistics Canada</a>, customs and import duties, 2025; <a class="underline hover:text-on-surface" href="https://www150.statcan.gc.ca/n1/daily-quotidien/260527/dq260527a-eng.htm">Canadian Survey on Business Conditions</a>, Q2 2026.</p>
+      </div>
+    </section>
+
+    <!-- Why it goes unclaimed -->
+    <section class="py-section">
+      <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col gap-gutter-xl">
+        <h2 class="font-headline text-headline-lg text-on-surface max-w-2xl">Why the money goes unclaimed</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
+          <div class="flex flex-col gap-1 border-t-2 border-primary pt-gutter-md">
+            <h3 class="font-title text-title-lg text-on-surface">Invoices show where goods shipped from</h3>
+            <p class="font-body text-body-md text-on-surface-variant">Counter-tariffs apply to goods made in the U.S. A U.S. warehouse address on the invoice doesn't make the goods American.</p>
+          </div>
+          <div class="flex flex-col gap-1 border-t-2 border-primary pt-gutter-md">
+            <h3 class="font-title text-title-lg text-on-surface">Only the importer of record can claim</h3>
+            <p class="font-body text-body-md text-on-surface-variant">Suppliers won't file for you. The claim has to come from your business, with evidence attached.</p>
+          </div>
+          <div class="flex flex-col gap-1 border-t-2 border-primary pt-gutter-md">
+            <h3 class="font-title text-title-lg text-on-surface">The paperwork costs more than the claim</h3>
+            <p class="font-body text-body-md text-on-surface-variant">Chasing origin documents line by line takes hours. We do that part, so a broker only has to review and file.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works (3 Steps) -->
+    <section class="py-section">
+      <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col gap-gutter-xl">
+        <div class="max-w-2xl flex flex-col gap-2">
+          <h2 class="font-headline text-headline-lg text-on-surface" data-design-text-token="headline-lg">How it works</h2>
+          <p class="font-body text-body-lg text-on-surface-variant" data-design-text-token="body-lg">Three steps from an invoice sitting in your inbox to a refund in your business account.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg items-stretch">
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm h-full">
+            <span class="w-10 h-10 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]" aria-hidden="true">upload_file</span>
+            </span>
+            <h3 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">Upload invoices</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Drop in your commercial invoices or customs entries. Your first scan is free and takes under two minutes.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm h-full">
+            <span class="w-10 h-10 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]" aria-hidden="true">manage_search</span>
+            </span>
+            <h3 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">We find the money</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">We check every line item for non-U.S. origin, misclassified HS codes, export drawback, and relief eligibility.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-sm h-full">
+            <span class="w-10 h-10 rounded-md bg-primary-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]" aria-hidden="true">verified_user</span>
+            </span>
+            <h3 class="font-title text-title-lg text-on-surface" data-design-text-token="title-lg">A broker files, you get paid</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">A licensed Canadian customs broker reviews the evidence, files with CBSA, and we track the payout until it lands.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- What We Find (4 Cards) -->
+    <section class="py-section bg-surface-container-low border-y border-outline-variant">
+      <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col gap-gutter-xl">
+        <div class="max-w-2xl flex flex-col gap-2">
+          <h2 class="font-headline text-headline-lg text-on-surface" data-design-text-token="headline-lg">What we find on your invoices</h2>
+          <p class="font-body text-body-lg text-on-surface-variant" data-design-text-token="body-lg">Every line item is checked against four recovery and savings paths.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg items-stretch">
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-primary text-[24px]" aria-hidden="true">public</span>
+            <h3 class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Wrong-origin refunds</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">Goods shipped from a U.S. warehouse but made in Korea, Mexico, or Europe should not carry U.S. counter-tariffs.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-primary text-[24px]" aria-hidden="true">tag</span>
+            <h3 class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Wrong tariff codes</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">We match product descriptions to exact HS headings so you are not overpaying on an incorrect 8-digit classification.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-primary text-[24px]" aria-hidden="true">local_shipping</span>
+            <h3 class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Export drawback</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">If imported inputs go into goods you export back out of Canada, you can claim back the duty and surtax paid.</p>
+          </article>
+          <article class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-2 h-full">
+            <span class="material-symbols-outlined text-primary text-[24px]" aria-hidden="true">account_balance</span>
+            <h3 class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Government relief programs</h3>
+            <p class="font-body text-body-md text-on-surface-variant" data-design-text-token="body-md">We match your business profile to Ontario and federal tariff-relief grants and draft your impact summary.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Built with licensed customs brokers + Ledger Mockup -->
+    <section class="py-section">
+      <div class="max-w-7xl mx-auto px-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-xl items-center">
+        <div class="lg:col-span-5 flex flex-col gap-gutter-md">
+          <h2 class="font-headline text-headline-lg text-on-surface" data-design-text-token="headline-lg">Built with licensed customs brokers.</h2>
+          <p class="font-body text-body-lg text-on-surface-variant" data-design-text-token="body-lg">
+            AI does the heavy reading and origin evidence gathering. A licensed Canadian customs broker verifies every HS code, signs off on the package, and files directly with CBSA.
+          </p>
+          <a href="/brokers" class="inline-flex items-center gap-2 font-label text-label-lg text-broker-accent hover:underline">
+            <span data-design-text-token="label-lg">See how brokers use Tariff Trace AI</span>
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+          </a>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg overflow-x-auto">
+            <div class="flex items-center justify-between mb-gutter-md">
+              <h3 class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Claim &amp; recovery ledger</h3>
+              <span class="px-2.5 py-1 rounded-full bg-broker-container text-on-broker-container font-label text-label-sm">Broker verified</span>
+            </div>
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-outline-variant text-on-surface-variant font-label text-label-sm">
+                  <th class="py-2 pr-4">Claim ID</th>
+                  <th class="py-2 pr-4">Line item</th>
+                  <th class="py-2 pr-4">Status</th>
+                  <th class="py-2 text-right">Refund</th>
+                </tr>
+              </thead>
+              <tbody class="font-body text-body-sm divide-y divide-outline-variant">
+                <tr>
+                  <td class="py-3 pr-4 font-mono text-mono-sm">CLM-4082</td>
+                  <td class="py-3 pr-4">Aluminum window frames (code correction)</td>
+                  <td class="py-3 pr-4"><span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Refund paid</span></td>
+                  <td class="py-3 text-right font-semibold text-primary tabular-nums">$8,000.00</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 font-mono text-mono-sm">CLM-4083</td>
+                  <td class="py-3 pr-4">Insulated glass units (CN)</td>
+                  <td class="py-3 pr-4"><span class="px-2 py-0.5 rounded-full bg-broker-container text-on-broker-container font-label text-label-sm">Broker filed</span></td>
+                  <td class="py-3 text-right font-semibold text-on-surface tabular-nums">$4,500.00</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 font-mono text-mono-sm">CLM-4084</td>
+                  <td class="py-3 pr-4">Window crank and lock kits (TW)</td>
+                  <td class="py-3 pr-4"><span class="px-2 py-0.5 rounded-full bg-warning-container text-on-warning-container font-label text-label-sm">Origin attached</span></td>
+                  <td class="py-3 text-right font-semibold text-on-surface tabular-nums">$1,500.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who it's for + Pricing Teaser -->
+    <section class="py-section bg-surface-container-low border-y border-outline-variant">
+      <div class="max-w-7xl mx-auto px-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-stretch">
+        <article class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+          <h2 class="font-headline text-headline-md text-on-surface">Who it's for</h2>
+          <ul class="flex flex-col divide-y divide-outline-variant">
+            <li class="py-3 flex flex-col gap-0.5"><span class="font-title text-title-md text-on-surface">Retailers and distributors</span><span class="font-body text-body-md text-on-surface-variant">Buying from U.S. suppliers or U.S. warehouses, including goods made elsewhere.</span></li>
+            <li class="py-3 flex flex-col gap-0.5"><span class="font-title text-title-md text-on-surface">Manufacturers that export</span><span class="font-body text-body-md text-on-surface-variant">Imported inputs that leave Canada in finished goods can qualify for drawback.</span></li>
+            <li class="py-3 flex flex-col gap-0.5"><span class="font-title text-title-md text-on-surface">Licensed customs brokers</span><span class="font-body text-body-md text-on-surface-variant">Ready-to-file claims with the evidence attached. <a href="/brokers" class="text-broker-accent hover:underline">How it works for brokers</a></span></li>
+          </ul>
+        </article>
+
+        <article class="lg:col-span-5 bg-primary text-on-primary rounded-lg p-gutter-lg flex flex-col justify-between gap-gutter-md">
+          <div class="flex flex-col gap-2">
+            <span class="font-label text-label-sm opacity-90" data-design-text-token="label-sm">Simple pricing</span>
+            <h2 class="font-headline text-headline-md text-on-primary" data-design-text-token="headline-md">Free scan. 20% of what we recover.</h2>
+            <p class="font-body text-body-md opacity-90" data-design-text-token="body-md">See what you are owed at zero cost. Recovery fees apply only when CBSA pays out your refund.</p>
+          </div>
+          <a href="/pricing" class="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-md bg-surface-container-lowest text-primary font-label text-label-lg hover:bg-surface-container-low transition-colors duration-state-change">
+            <span data-design-text-token="label-lg">View full pricing</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ (5 items) -->
+    <section class="py-section">
+      <div class="max-w-3xl mx-auto px-gutter-lg flex flex-col gap-gutter-lg">
+        <h2 class="font-headline text-headline-lg text-on-surface text-center" data-design-text-token="headline-lg">Common questions</h2>
+        <div data-component-id="accordion-group" data-component-type="accordion" data-component-variant="group" class="flex flex-col gap-gutter-sm">
+          <details class="group bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-md" open>
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none min-h-[44px]">
+              <span class="font-title text-title-md text-on-surface" data-design-text-token="title-md">What does the free scan include?</span>
+              <span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-state-change group-open:rotate-180" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="pt-gutter-sm text-body-md text-on-surface-variant">
+              <p data-design-text-token="body-md">We read every line of your commercial invoice or customs entry and show how much is recoverable now, what needs an origin document, and what you can avoid on your next order.</p>
+            </div>
+          </details>
+          <details class="group bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-md">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none min-h-[44px]">
+              <span class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Is Tariff Trace AI a customs broker?</span>
+              <span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-state-change group-open:rotate-180" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="pt-gutter-sm text-body-md text-on-surface-variant">
+              <p data-design-text-token="body-md">No. Tariff Trace AI prepares your claim package and origin evidence, and a licensed Canadian customs broker reviews and files it with CBSA.</p>
+            </div>
+          </details>
+          <details class="group bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-md">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none min-h-[44px]">
+              <span class="font-title text-title-md text-on-surface" data-design-text-token="title-md">What if my invoice does not list the country of origin?</span>
+              <span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-state-change group-open:rotate-180" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="pt-gutter-sm text-body-md text-on-surface-variant">
+              <p data-design-text-token="body-md">Our system checks your supplier&#39;s product pages for country-of-origin declarations and captures timestamped evidence for the broker.</p>
+            </div>
+          </details>
+          <details class="group bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-md">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none min-h-[44px]">
+              <span class="font-title text-title-md text-on-surface" data-design-text-token="title-md">How long does a CBSA refund take?</span>
+              <span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-state-change group-open:rotate-180" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="pt-gutter-sm text-body-md text-on-surface-variant">
+              <p data-design-text-token="body-md">Scanning takes minutes, broker filing typically happens within 1 week, and CBSA refunds usually land in about 3 months.</p>
+            </div>
+          </details>
+          <details class="group bg-surface-container-lowest border border-outline-variant rounded-lg p-gutter-md">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none min-h-[44px]">
+              <span class="font-title text-title-md text-on-surface" data-design-text-token="title-md">Where are my uploaded invoices stored?</span>
+              <span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-state-change group-open:rotate-180" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="pt-gutter-sm text-body-md text-on-surface-variant">
+              <p data-design-text-token="body-md">In private storage on Cloudflare R2. Files are only shared with the licensed broker filing your claim, and the AI that reads them runs on the same network.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Band -->
+    <section class="py-gutter-xl bg-surface-container-lowest border-t border-outline-variant">
+      <div class="max-w-4xl mx-auto px-gutter-lg text-center flex flex-col items-center gap-gutter-md">
+        <h2 class="font-headline text-headline-lg text-on-surface" data-design-text-token="headline-lg">See what your business is owed</h2>
+        <p class="font-body text-body-lg text-on-surface-variant max-w-prose" data-design-text-token="body-lg">Upload a recent U.S. supplier invoice and get a line-by-line refund and surtax breakdown for free.</p>
+        <a href="/start" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" class="inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-md bg-primary text-on-primary font-label text-label-lg hover:opacity-95 transition-opacity duration-state-change">
+          <span data-design-text-token="label-lg">Get a free scan</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="bg-surface-container-low border-t border-outline-variant py-gutter-xl">
+    <div class="max-w-7xl mx-auto px-gutter-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-gutter-md">
+      <div class="flex flex-col gap-1">
+        <span class="font-headline text-title-md text-on-surface font-bold" data-design-text-token="title-md">Tariff Trace AI</span>
+        <p class="font-body text-body-sm text-on-surface-variant" data-design-text-token="body-sm">Tariff Trace AI is not a customs broker; claims are filed by licensed brokers.</p>
+      </div>
+      <nav aria-label="Footer navigation" class="flex flex-wrap gap-gutter-md font-body text-body-sm text-on-surface-variant">
+        <a href="/" class="hover:text-on-surface">Home</a>
+        <a href="/how-it-works" class="hover:text-on-surface">How it works</a>
+        <a href="/brokers" class="hover:text-on-surface">For brokers</a>
+        <a href="/pricing" class="hover:text-on-surface">Pricing</a>
+        <a href="/about" class="hover:text-on-surface">About</a>
+        <a href="/start" class="hover:text-on-surface">Free scan</a>
+        <a href="/app" class="hover:text-on-surface">Client app</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const DATA = {
+        lakeshore: { total: '$19,300 found', sub: 'Lakeshore Windows Inc. • window manufacturer • 30% exported', rec: '$17,800', pend: '$1,500', avoid: '$7,700', lines: '5 lines checked', status: 'Ready to file',
+          line: 'HS 8302.41 • Window crank and lock kit (origin missing)', badge: '+$1,500 locked', recAfter: '$19,300', lineAfter: 'Country of origin: Taiwan (supplier page attached)', badgeAfter: '+$1,500 unlocked' },
+        beauty: { total: '$1,700 found', sub: 'Sample: beauty supply distributor • 1 invoice', rec: '$1,575', pend: '$125', avoid: '$1,588', lines: '7 lines checked', status: 'Ready to file',
+          line: 'HS 9615.11 • Wide-tooth comb (origin missing)', badge: '+$125 locked', recAfter: '$1,700', lineAfter: 'Country of origin: Republic of Korea (supplier page attached)', badgeAfter: '+$125 unlocked' },
+      };
+      const ON = 'px-3 py-1.5 rounded-md bg-primary text-on-primary font-label text-label-sm cursor-pointer';
+      const OFF = 'px-3 py-1.5 rounded-md bg-surface-container-low text-on-surface border border-outline-variant font-label text-label-sm cursor-pointer hover:bg-surface-container';
+      const LOCKED = 'px-2 py-0.5 rounded-full bg-warning-container text-on-warning-container font-label text-label-sm';
+      const OPEN = 'px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm';
+      const live = document.querySelector('a[href^="/app?sample="]');
+      let mode = 'lakeshore', found = false;
+      function render(m) {
+        mode = m; found = false; const d = DATA[m];
+        $('demo-tab-beauty').className = m === 'lakeshore' ? ON : OFF;
+        $('demo-tab-mfg').className = m === 'beauty' ? ON : OFF;
+        $('demo-total').textContent = d.total; $('demo-subtitle').textContent = d.sub;
+        $('demo-recoverable').textContent = d.rec; $('demo-pending').textContent = d.pend; $('demo-avoidable').textContent = d.avoid;
+        $('demo-lines-badge').textContent = d.lines;
+        $('demo-status-pill').textContent = d.status; $('demo-status-pill').className = 'px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm';
+        $('demo-line-title').textContent = d.line; $('demo-line-badge').textContent = d.badge; $('demo-line-badge').className = LOCKED;
+        if (live) live.href = '/app?sample=' + m;
+      }
+      $('demo-tab-beauty').addEventListener('click', () => render('lakeshore'));
+      $('demo-tab-mfg').addEventListener('click', () => render('beauty'));
+      $('demo-origin-btn').addEventListener('click', () => {
+        if (found) return; found = true; const d = DATA[mode];
+        $('demo-recoverable').textContent = d.recAfter; $('demo-pending').textContent = '$0';
+        $('demo-line-title').textContent = d.lineAfter; $('demo-line-badge').textContent = d.badgeAfter; $('demo-line-badge').className = OPEN;
+      });
+      $('demo-broker-btn').addEventListener('click', () => { $('demo-status-pill').textContent = 'Sent to broker'; });
+    })();
+  </script>
+
+
+
+</body></html>

@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dutyback",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+
+  // Browser Rendering: Origin Detective opens supplier pages in a real browser and screenshots the evidence.
+  "browser": { "binding": "BROWSER" },
+
+  // Workers AI: document reading, extraction, embeddings, claim drafting. Runs on Cloudflare, so client data stays here.
+  "ai": { "binding": "AI" },
+
+  "vars": {
+    "MOCK_AI": "0",                    // "1" while building = no AI calls (saves the 10,000 free neurons/day)
+    "MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "AI_GATEWAY_ID": "",               // set to your AI Gateway name to log every AI call (audit trail)
+    "BROKER_LICENCES": "2",            // broker firms paying the $1,000/month platform licence (billed in monthly billing)
+    "REFUND_DELAY": "20 seconds"       // real life: weeks to months
+  },
+
+  // D1: scans, claims, alerts. Run: npx wrangler d1 create dutyback  → paste the id below.
+  "d1_databases": [{ "binding": "DB", "database_name": "dutyback", "database_id": "cc3bee3f-ddc8-46ef-9e32-327e699bf6c5" }],
+
+
+  // Vectorize: tariff headings by meaning. Run: npx wrangler vectorize create dutyback-tariffs --dimensions=768 --metric=cosine
+  "vectorize": [{ "binding": "VECTORIZE", "index_name": "dutyback-tariffs" }],
+
+  // Workflows: each claim is a durable process (broker review → filed → refund → bill 20%).
+  "workflows": [{ "name": "dutyback-claim", "binding": "CLAIM_WORKFLOW", "class_name": "ClaimWorkflow" }],
+
+  // Cron: re-check every saved client when tariff lists change.
+  "triggers": { "crons": ["0 */6 * * *"] },
+
+  "observability": { "enabled": true }
+}

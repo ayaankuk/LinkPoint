@@ -1,0 +1,14 @@
+LAKESHORE BROKERAGE SERVICES (fictional) — CUSTOMS SURTAX STATEMENT
+Importer: Northbank Windows & Doors Ltd. (fictional), 120 Fairway Rd, Kitchener ON
+Period: September 8 – November 15, 2026  ·  All values in CAD  ·  FICTIONAL SAMPLE FOR DEMO ONLY
+Note: about 40% of our finished windows are sold to U.S. customers.
+
+| Line | Description | Supplier | Qty | Value (CAD) | Country of origin | Shipped from | HS declared | Surtax paid (CAD) |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 6063 aluminum extrusion profile, 20ft, mill finish | Great Lakes Metals Distribution (Toledo OH) | 1600 | 64000 | China | USA | 7604.29 | 32000 |
+| 2 | Galvanized steel mounting bracket, window frame | Midwest Fab Supply (Detroit MI) | 8000 | 22000 | Mexico | USA | 7326.90 | 11000 |
+| 3 | Thermal-break aluminum window frame extrusion | Keystone Extrusions Inc. (Erie PA) | 900 | 48000 | USA | USA | 7604.29 | 24000 |
+| 4 | Stretch wrap polyethylene film, 18in x 1500ft | Ohio Pack Co. (Columbus OH) | 300 | 6000 |  | USA | 3923.21 | 1500 |
+| 5 | Liquid soap hand cleanser, shop use, 5 gal | Ohio Pack Co. (Columbus OH) | 120 | 4800 | USA | USA | 3304.99 | 1200 |
+
+Total surtax paid this period: 69,700 CAD

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tariff Trace AI: find tariff money you're owed</title>
+<style>
+:root{--bg:#F7F9FB;--card:#fff;--ink:#16181d;--mute:#5d6472;--line:#DBE3EE;--acc:#0369A1;--acc2:#E0F2FE;--warn:#9a5b00;--warn2:#fdf3e3;--blue:#004B73}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;justify-content:space-between;padding:18px max(4vw,16px);border-bottom:1px solid var(--line);background:#fff}
+header h1{margin:0;font-size:24px}header h1 span{color:var(--acc)}
+header p{margin:0;color:var(--mute)}
+.nav{font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;padding:6px 10px;border-radius:8px}.nav.on{background:var(--acc2);color:var(--acc)}
+.badges{display:flex;gap:6px;flex-wrap:wrap}.badge{font-size:12px;padding:3px 8px;border-radius:999px;background:#eee;color:var(--mute)}.badge.on{background:var(--acc2);color:var(--acc)}
+main{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:20px;padding:20px max(4vw,16px);max-width:1280px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+h2{margin:0 0 6px;font-size:18px}h3{margin:0;font-size:16px}
+.mute{color:var(--mute);font-size:14px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+input[type=text],input[type=number],textarea{width:100%;font:15px system-ui;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+textarea{min-height:150px;font:13px ui-monospace,Menlo,monospace}
+button{font:600 15px system-ui;border-radius:10px;border:1px solid var(--line);background:#fff;padding:10px 14px;cursor:pointer;min-height:44px}
+button.main{background:var(--acc);color:#fff;border-color:var(--acc);width:100%;margin-top:14px}
+button:disabled{opacity:.5;cursor:wait}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.big{font-size:44px;font-weight:700;line-height:1.05;color:var(--acc)}
+.split{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.split div{background:var(--bg);border-radius:10px;padding:10px}.split b{display:block;font-size:18px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--mute);font-weight:600}
+td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.code-chg{color:var(--warn);font-weight:600}
+.f{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:10px}
+.f.refund{border-left:4px solid var(--acc)}.f.pending{border-left:4px solid var(--warn)}.f.avoidable{border-left:4px solid var(--blue)}
+.f .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.amt{font-weight:700;font-size:18px;white-space:nowrap}
+.tag{font-size:12px;padding:2px 8px;border-radius:999px;background:var(--bg);color:var(--mute);margin-right:6px}
+.claim{background:var(--acc2);border-radius:12px;padding:14px;margin-top:10px}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.step{font-size:13px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--mute)}
+.step.done{background:var(--acc);border-color:var(--acc);color:#fff}
+.alert{background:var(--warn2);border:1px solid #f0d6a8;border-radius:10px;padding:10px;margin-top:8px;font-size:14px}
+#trace{margin:0;padding-left:18px;font-size:13px;color:var(--mute)}
+.empty{color:var(--mute);text-align:center;padding:40px 10px}
+footer{max-width:1280px;margin:0 auto;padding:0 max(4vw,16px) 30px;color:var(--mute);font-size:13px}
+select{width:100%;font:15px system-ui;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;min-height:44px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.prog{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+.prog .type{font-size:12px;color:var(--acc);font-weight:600}
+.detect{background:var(--warn2);border-radius:10px;padding:10px;margin-top:10px}
+.detect input{margin:6px 0}
+.evidence{background:var(--acc2);border-radius:10px;padding:10px;margin-top:10px;font-size:14px}
+.evidence img{display:block;max-width:100%;border:1px solid var(--line);border-radius:8px;margin-top:8px}
+pre{white-space:pre-wrap;font:13px ui-monospace,Menlo,monospace;background:#fff;border-radius:8px;padding:10px;margin:8px 0 0}
+@media(max-width:860px){main{grid-template-columns:minmax(0,1fr)}.split{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Tariff Trace <span>AI</span></h1><p>Find the tariff money your business is owed. We only get paid when you do.</p></div>
+  <div><div class="row" style="justify-content:flex-end;margin-bottom:6px"><a class="nav" href="/">Website</a><a class="nav on" href="/app">Client</a><a class="nav" href="/broker.html" target="_blank">Broker portal</a><a class="nav" href="/admin.html" target="_blank">Admin</a></div><div class="badges" id="badges"></div></div>
+</header>
+<main>
+  <section>
+    <div class="card">
+      <h2>1. Upload your import documents</h2>
+      <p class="mute">Commercial invoices or customs entries. The first scan is free.</p>
+      <label for="client">Business name</label>
+      <input type="text" id="client" value="Lakeshore Windows Inc.">
+      <label for="file">Upload a PDF or text file</label>
+      <input type="file" id="file" accept=".pdf,.txt,.csv,.md">
+      <label for="text">…or paste the invoice</label>
+      <textarea id="text" placeholder="Paste invoice text or a table"></textarea>
+      <div class="row" style="margin-top:8px">
+        <button type="button" data-sample="lakeshore">Sample: Lakeshore Windows</button>
+        <button type="button" data-sample="beauty">Sample: beauty distributor</button>
+      </div>
+      <label for="exp">Share of these goods you export (or that go into products you export)</label>
+      <input type="number" id="exp" min="0" max="100" value="0">
+      <div class="grid2">
+        <div><label for="sector">Business type</label>
+          <select id="sector"><option value="retail">Retail store</option><option value="wholesale">Wholesale / distribution</option><option value="manufacturing">Manufacturing</option><option value="construction">Construction / trades</option></select></div>
+        <div><label for="employees">Employees</label><input type="number" id="employees" min="1" value="6"></div>
+      </div>
+      <label for="region">Region</label>
+      <select id="region"><option value="southern-ontario">Southern Ontario</option><option value="northern-ontario">Northern Ontario</option><option value="other">Outside Ontario</option></select>
+      <button class="main" id="scan" type="button">Scan for money owed</button>
+    </div>
+    <div class="card">
+      <h2>Monitoring</h2>
+      <p class="mute">When Ottawa changes the tariff list, every saved client is re-checked automatically.</p>
+      <button type="button" id="sim">Simulate a tariff list update</button>
+      <div id="alerts"></div>
+    </div>
+    <div class="card">
+      <h2>Under the hood</h2>
+      <ol id="trace"><li>Run a scan to see each Cloudflare step.</li></ol>
+    </div>
+  </section>
+  <section id="results">
+    <div class="card empty">Upload or paste an invoice, or load a sample, then scan.</div>
+  </section>
+</main>
+<footer>
+  Demo tariff rates are assumptions for illustration, not the official counter-tariff list. Every claim is reviewed and filed by a licensed customs broker.
+  <button type="button" id="seed" style="margin-left:8px;min-height:32px;padding:4px 10px;font-size:13px">Seed tariff index</button>
+</footer>
+
+<script>
+{
+const $ = (s) => document.querySelector(s);
+const cad = (n) => n.toLocaleString('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: n >= 1000 ? 0 : 2 });
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let state = null;
+
+const SAMPLES = {
+  lakeshore: { client: 'Lakeshore Windows Inc.', exp: 30, sector: 'manufacturing', employees: 45, text: `COMMERCIAL INVOICES (fictional sample)
+Importer of record: Lakeshore Windows Inc., Ontario. Window and door manufacturer; about 30% of production is exported.
+| Line | Description | Supplier | Qty | Value (CAD) | Country of origin | Shipped from | HS declared | Surtax paid (CAD) |
+| 1 | Aluminum casement window frame assembly | Great Lakes Extrusions | 800 | 32000 | USA | USA | 7604.29 | 16000 |
+| 2 | Insulated glass unit, double-pane low-E | Northstar Glass Supply | 600 | 18000 | China | USA | 7008.00 | 4500 |
+| 3 | Casement window crank and lock hardware kit | Keystone Hardware Distributors | 1000 | 6000 |  | USA | 8302.41 | 1500 |
+| 4 | Vinyl window profile, white, 16ft | Ohio Valley Vinyl | 1500 | 12000 | USA | USA | 3916.20 | 3000 |
+| 5 | Galvanized steel mounting bracket | Midwest Fab Supply | 4000 | 4000 | Mexico | USA | 7326.90 | 2000 |` },
+  beauty: { client: 'Beauty supply distributor (sample)', exp: 0, sector: 'retail', employees: 6, text: `COMMERCIAL INVOICE (fictional sample)
+Seller: Northgate Beauty Distributors, Buffalo NY (fictional)
+Buyer: Sample beauty supply distributor
+| Line | Description | Supplier | Qty | Value (CAD) | Country of origin | Shipped from | HS declared | Surtax paid (CAD) |
+| 1 | 30in synthetic braiding hair, ombre, 3-pack | Northgate Beauty Distributors | 400 | 3200 | China | USA | 6704.19 | 800 |
+| 2 | Edge control gel 4oz | Northgate Beauty Distributors | 600 | 2700 | USA | USA | 3305.90 | 675 |
+| 3 | Leave-in conditioner 16oz | Northgate Beauty Distributors | 300 | 2250 | USA | USA | 3305.90 | 562.50 |
+| 4 | Ceramic flat iron 1in | Northgate Beauty Distributors | 40 | 1600 | China | USA | 8516.32 | 400 |
+| 5 | Wide-tooth detangling comb | Northgate Beauty Distributors | 500 | 500 |  | USA | 9615.11 | 125 |
+| 6 | Ionic hair dryer 1875W | Northgate Beauty Distributors | 30 | 1500 | USA | USA | 8516.32 | 375 |
+| 7 | SPF 50 sunscreen lotion 6oz | Northgate Beauty Distributors | 200 | 1400 | USA | USA | 3304.99 | 350 |` },
+};
+
+document.querySelectorAll('[data-sample]').forEach((b) => b.addEventListener('click', () => {
+  const s = SAMPLES[b.dataset.sample];
+  $('#text').value = s.text; $('#client').value = s.client; $('#exp').value = s.exp; $('#file').value = '';
+  $('#sector').value = s.sector; $('#employees').value = s.employees; $('#region').value = 'southern-ontario';
+}));
+
+// Same math as the server's rules engine, so totals update live when Origin Detective upgrades a finding.
+function summarize(fs) {
+  const sum = (k) => Math.round(fs.filter((f) => f.kind === k).reduce((s, f) => s + f.amount, 0) * 100) / 100;
+  const recoverable = sum('refund'), pending = sum('pending'), avoidablePerOrder = sum('avoidable');
+  return { recoverable, pending, avoidablePerOrder, found: recoverable + pending, dutybackFee: Math.round(recoverable * 20) / 100, clientKeeps: Math.round(recoverable * 80) / 100 };
+}
+const supplierPage = (line) => /northgate/i.test(line?.supplier || '') && /comb/i.test(line?.description || '') ? `${location.origin}/suppliers/northgate-comb.html`
+  : /ohio pack/i.test(line?.supplier || '') && /air conditioner/i.test(line?.description || '') ? `${location.origin}/suppliers/ohio-pack-ac.html`
+  : /keystone/i.test(line?.supplier || '') && /hardware/i.test(line?.description || '') ? `${location.origin}/suppliers/keystone-hardware.html` : '';
+
+function setTrace(lines) { $('#trace').innerHTML = (lines || []).map((t) => `<li>${esc(t)}</li>`).join('') || '<li>No steps recorded.</li>'; }
+function addTrace(lines) { const ol = $('#trace'); (lines || []).forEach((t) => ol.insertAdjacentHTML('beforeend', `<li>${esc(t)}</li>`)); }
+
+async function health() {
+  try {
+    const h = await (await fetch('/api/health')).json();
+    const b = h.bindings || {};
+    const items = [['Workers AI', b.ai], ['R2', b.r2], ['Vectorize', b.vectorize], ['D1', b.db], ['Workflows', b.workflow], ['Browser Rendering', b.browser], ['AI Gateway', b.gateway]];
+    $('#badges').innerHTML = items.map(([n, on]) => `<span class="badge ${on ? 'on' : ''}">${n}</span>`).join('') + (h.mock ? '<span class="badge">mock AI</span>' : '');
+  } catch { $('#badges').innerHTML = '<span class="badge">API offline</span>'; }
+}
+
+$('#scan').addEventListener('click', async () => {
+  const btn = $('#scan'); btn.disabled = true; btn.textContent = 'Reading documents…';
+  const fd = new FormData();
+  const f = $('#file').files[0]; if (f) fd.append('file', f);
+  fd.append('text', $('#text').value); fd.append('client', $('#client').value); fd.append('exportShare', $('#exp').value || '0');
+  fd.append('sector', $('#sector').value); fd.append('employees', $('#employees').value || '10'); fd.append('region', $('#region').value);
+  try {
+    const r = await fetch('/api/scan', { method: 'POST', body: fd });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || 'Scan failed');
+    state = data; renderResults(); setTrace(data.trace);
+  } catch (e) {
+    $('#results').innerHTML = `<div class="card empty">${esc(e.message)}</div>`;
+  } finally { btn.disabled = false; btn.textContent = 'Scan for money owed'; }
+});
+
+function renderResults() {
+  const { lines, findings, client, programs = [] } = state;
+  const totals = summarize(findings);
+  const byLine = Object.fromEntries(lines.map((l) => [l.line, l]));
+  const order = { refund: 0, pending: 1, avoidable: 2 };
+  const fs = [...findings].sort((a, b) => order[a.kind] - order[b.kind] || b.amount - a.amount);
+  $('#results').innerHTML = `
+    <div class="card">
+      <p class="mute">${esc(client)} · ${lines.length} line items scanned</p>
+      <div class="big">${cad(totals.found)} found</div>
+      <div class="split">
+        <div><span class="mute">Recoverable now</span><b>${cad(totals.recoverable)}</b></div>
+        <div><span class="mute">Needs a supplier document</span><b>${cad(totals.pending)}</b></div>
+        <div><span class="mute">Avoidable on your next order</span><b>${cad(totals.avoidablePerOrder)}</b></div>
+      </div>
+      <p class="mute" style="margin:12px 0 0">You keep ${cad(totals.clientKeeps)} of what's recovered; Tariff Trace AI's 20% fee is ${cad(totals.dutybackFee)}.</p>
+    </div>
+    <div class="card">
+      <h2>What we found</h2>
+      ${fs.map((f) => `
+        <div class="f ${f.kind}" id="card-${f.id}">
+          <div class="top"><h3>${esc(f.title)}</h3><span class="amt">${cad(f.amount)}</span></div>
+          <p class="mute" style="margin:4px 0">Line ${f.line}: ${esc(byLine[f.line]?.description)}</p>
+          <p style="margin:6px 0">${esc(f.why)}</p>
+          <span class="tag">${f.kind === 'refund' ? 'Refund' : f.kind === 'pending' ? 'Needs document' : 'Per order, going forward'}</span><span class="tag">Confidence: ${esc(f.confidence)}</span>
+          ${f.evidence ? `<div class="evidence"><b>Evidence found on the supplier's site:</b> "${esc(f.evidence)}"${f.screenshot ? `<img src="${f.screenshot}" alt="Screenshot of the supplier product page">` : ''}</div>` : ''}
+          ${f.type === 'origin_unknown' ? `<div class="detect"><b>Origin Detective</b><div class="mute">Paste the supplier's product page and Tariff Trace AI will look for where it was made.</div>
+            <input type="text" id="url-${f.id}" value="${esc(supplierPage(byLine[f.line]))}" placeholder="https://supplier.com/product">
+            <button type="button" data-origin="${f.id}">Find origin evidence</button></div>` : ''}
+          ${f.kind !== 'avoidable' ? `<div class="row" style="margin-top:10px"><button type="button" data-draft="${f.id}">Draft claim</button></div>` : ''}
+          <div class="slot"></div>
+        </div>`).join('')}
+    </div>
+    ${programs.length ? `<div class="card">
+      <h2>Government relief you may qualify for</h2>
+      <p class="mute">Matched from your scan. These are leads to check, not eligibility decisions.</p>
+      ${programs.map((p) => `<div class="prog" id="prog-${p.id}"><div class="type">${esc(p.type)}</div><h3>${p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.name)}</a>` : esc(p.name)}</h3>
+        <p style="margin:4px 0" class="mute">${esc(p.fit)}</p><p style="margin:4px 0">${esc(p.why)}</p>
+        <button type="button" data-relief="${p.id}">Draft my tariff impact summary</button><div class="slot"></div></div>`).join('')}
+    </div>` : ''}
+    <div class="card">
+      <h2>Line items read by the AI</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>#</th><th>Item</th><th>Origin</th><th>Tariff code</th><th class="n">Value</th><th class="n">Surtax paid</th></tr></thead>
+        <tbody>${lines.map((l) => `<tr><td>${l.line}</td><td>${esc(l.description)}<br><span class="mute">${esc(l.supplier)}</span></td>
+          <td>${esc(l.origin || '?')}${l.shippedFrom && l.shippedFrom !== l.origin ? `<br><span class="mute">ships from ${esc(l.shippedFrom)}</span>` : ''}</td>
+          <td>${esc(l.hsDeclared || '?')}${l.hsSuggested && l.hsSuggested !== l.hsDeclared ? `<br><span class="code-chg">AI suggests ${esc(l.hsSuggested)}</span>` : ''}</td>
+          <td class="n">${cad(l.value)}</td><td class="n">${cad(l.surtaxPaid)}</td></tr>`).join('')}</tbody>
+      </table></div>
+    </div>`;
+}
+
+$('#results').addEventListener('click', async (e) => {
+  const d = e.target.closest('[data-draft]'); const s = e.target.closest('[data-send]');
+  const o = e.target.closest('[data-origin]'); const rl = e.target.closest('[data-relief]');
+  if (o) {
+    const f = state.findings.find((x) => x.id === o.dataset.origin); const url = $(`#url-${CSS.escape(f.id)}`).value.trim();
+    if (!url) return;
+    o.disabled = true; o.textContent = 'Checking the supplier site…';
+    try {
+      const r = await fetch('/api/origin', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ url, finding: f, line: state.lines.find((l) => l.line === f.line) }) });
+      const data = await r.json(); addTrace(data.trace);
+      if (!r.ok) throw new Error(data.error || 'Check failed');
+      const i = state.findings.findIndex((x) => x.id === f.id);
+      state.findings[i] = { ...data.finding, evidence: data.evidence || 'No origin statement found on that page.', screenshot: data.screenshot };
+      renderResults();
+      $(`#card-${CSS.escape(f.id)}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) { o.disabled = false; o.textContent = `Try again (${err.message})`; }
+    return;
+  }
+  if (rl) {
+    const p = state.programs.find((x) => x.id === rl.dataset.relief); const slot = rl.parentElement.querySelector('.slot');
+    rl.disabled = true; rl.textContent = 'Drafting…';
+    const r = await fetch('/api/relief/draft', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ client: state.client, profile: state.profile, program: p, totals: summarize(state.findings), surtaxTotal: state.surtaxTotal, lines: state.lines }) });
+    const data = await r.json(); addTrace(data.trace);
+    slot.innerHTML = `<div class="claim"><b>Tariff impact summary for your application</b><p style="margin:6px 0">${esc(data.summary)}</p><p class="mute" style="margin:0">Paste this into the application; confirm the program's criteria first.</p></div>`;
+    rl.textContent = 'Drafted';
+    return;
+  }
+  if (d) {
+    const f = state.findings.find((x) => x.id === d.dataset.draft); const card = $(`#card-${CSS.escape(f.id)}`); const slot = card.querySelector('.slot');
+    d.disabled = true; d.textContent = 'Drafting…';
+    const r = await fetch('/api/claim/draft', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ client: state.client, finding: f, line: state.lines.find((l) => l.line === f.line) }) });
+    const data = await r.json(); addTrace(data.trace);
+    const dr = data.draft || {}; f.draft = dr;
+    slot.innerHTML = `<div class="claim"><b>Draft for the broker</b><p style="margin:6px 0">${esc(dr.claimSummary)}</p>
+      ${(dr.brokerChecklist || []).length ? `<b>Broker checklist</b><ul style="margin:4px 0">${dr.brokerChecklist.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}
+      ${dr.supplierEmail ? `<b>Email to supplier</b><pre>${esc(dr.supplierEmail)}</pre>` : ''}
+      <button type="button" class="main" data-send="${f.id}">Send to licensed broker</button><div class="track"></div></div>`;
+    d.textContent = 'Drafted';
+  }
+  if (s) {
+    const f = state.findings.find((x) => x.id === s.dataset.send); s.disabled = true;
+    const r = await fetch('/api/claim/send', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ scanId: state.scanId, client: state.client, finding: f, draft: f.draft }) });
+    const data = await r.json(); addTrace(data.trace);
+    const track = s.parentElement.querySelector('.track');
+    const STEPS = ['Drafted', 'Broker reviewing', 'Filed', 'Refund received'];
+    const waitNote = '<p class="mute" style="margin:8px 0 0">Waiting for the licensed broker to approve and file. Open the <a href="/broker.html" target="_blank">Broker portal</a>.</p>';
+    const paint = (status, fee) => { const i = STEPS.indexOf(status); track.innerHTML = `<div class="steps">${STEPS.map((x, j) => `<span class="step ${j <= i ? 'done' : ''}">${x}</span>`).join('')}</div>${status === 'Broker reviewing' ? waitNote : ''}${fee ? `<p style="margin:8px 0 0"><b>Refund received.</b> Tariff Trace AI fee billed: ${cad(fee)}</p>` : ''}${data.note ? `<p class="mute">${esc(data.note)}</p>` : ''}`; };
+    paint(data.status);
+    if (!data.note) {
+      const t = setInterval(async () => {
+        const st = await (await fetch(`/api/claim/${data.claimId}`)).json();
+        paint(st.status, st.fee);
+        if (st.status === 'Refund received') clearInterval(t);
+      }, 2500);
+    }
+  }
+});
+
+$('#sim').addEventListener('click', async () => {
+  const b = $('#sim'); b.disabled = true;
+  const data = await (await fetch('/api/tariffs/simulate-update', { method: 'POST' })).json();
+  addTrace(data.trace);
+  $('#alerts').innerHTML = (data.alerts || []).length ? data.alerts.map((a) => `<div class="alert"><b>${esc(a.client)}</b><br>${esc(a.message)}</div>`).join('') : '<p class="mute">No saved clients affected. Run a scan first.</p>';
+  b.disabled = false;
+});
+
+$('#seed').addEventListener('click', async () => {
+  const r = await (await fetch('/api/admin/seed', { method: 'POST' })).json();
+  $('#seed').textContent = r.seeded ? `Seeded ${r.seeded} tariff headings` : (r.error || 'Seed failed');
+});
+
+health();
+// Opened from the website: /app?sample=beauty&client=Name runs a scan straight away.
+{
+  const qp = new URLSearchParams(location.search);
+  const sample = qp.get('sample'), client = qp.get('client');
+  if (sample && document.querySelector(`[data-sample="${sample}"]`)) {
+    document.querySelector(`[data-sample="${sample}"]`).click();
+    if (client) $('#client').value = client;
+    $('#scan').click();
+  } else if (client) $('#client').value = client;
+}
+}
+
+</script>
+</body>
+</html>
